@@ -1,0 +1,81 @@
+import { Prisma } from '@prisma/client';
+import { DatabaseService } from 'src/database/database.service';
+export declare class PropertyService {
+    private readonly databaseService;
+    constructor(databaseService: DatabaseService);
+    create(createPropertyDto: Prisma.PropertyCreateInput): Promise<{
+        id: number;
+        ownerAddress: string;
+        tenantAddress: string | null;
+        address: string;
+        type: string;
+        bedrooms: number;
+        bathrooms: number;
+        size: number | null;
+        description: string;
+        rentalPrice: number;
+        available: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    findAll(): Prisma.PrismaPromise<{
+        id: number;
+        ownerAddress: string;
+        tenantAddress: string | null;
+        address: string;
+        type: string;
+        bedrooms: number;
+        bathrooms: number;
+        size: number | null;
+        description: string;
+        rentalPrice: number;
+        available: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
+    findOne(id: number): Prisma.Prisma__PropertyClient<{
+        id: number;
+        ownerAddress: string;
+        tenantAddress: string | null;
+        address: string;
+        type: string;
+        bedrooms: number;
+        bathrooms: number;
+        size: number | null;
+        description: string;
+        rentalPrice: number;
+        available: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    update(id: number, updatePropertyDto: Prisma.PropertyUpdateInput): Prisma.Prisma__PropertyClient<{
+        id: number;
+        ownerAddress: string;
+        tenantAddress: string | null;
+        address: string;
+        type: string;
+        bedrooms: number;
+        bathrooms: number;
+        size: number | null;
+        description: string;
+        rentalPrice: number;
+        available: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    remove(id: number): Prisma.Prisma__PropertyClient<{
+        id: number;
+        ownerAddress: string;
+        tenantAddress: string | null;
+        address: string;
+        type: string;
+        bedrooms: number;
+        bathrooms: number;
+        size: number | null;
+        description: string;
+        rentalPrice: number;
+        available: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+}

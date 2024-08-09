@@ -12,14 +12,28 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const gpt_module_1 = require("./gpt/gpt.module");
 const world_id_module_1 = require("./world-id/world-id.module");
+const property_module_1 = require("./property/property.module");
+const database_module_1 = require("./database/database.module");
+const database_service_1 = require("./database/database.service");
+const payments_module_1 = require("./payments/payments.module");
+const tenants_module_1 = require("./tenants/tenants.module");
+const owners_module_1 = require("./owners/owners.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [gpt_module_1.GptModule, world_id_module_1.WorldIdModule],
+        imports: [
+            gpt_module_1.GptModule,
+            world_id_module_1.WorldIdModule,
+            property_module_1.PropertyModule,
+            database_module_1.DatabaseModule,
+            payments_module_1.PaymentsModule,
+            tenants_module_1.TenantsModule,
+            owners_module_1.OwnersModule,
+        ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, database_service_1.DatabaseService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
