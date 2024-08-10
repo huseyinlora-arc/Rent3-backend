@@ -63,6 +63,7 @@ model Property {
   yearBuilt     Int?
   parkingSpaces Int?      @default(0)
   amenities     Amenity[]
+  images        String[]
 
   // Pricing details
   rentalPrice   Float
