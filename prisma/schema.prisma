@@ -10,7 +10,7 @@ datasource db {
 
 model Tenant {
   id            Int      @id @default(autoincrement())
-  walletAddress String   @unique
+  walletAddress String?  @unique
   nullifierHash String   @unique
   name          String?
   email         String?
@@ -24,7 +24,7 @@ model Tenant {
 
 model PropertyOwner {
   id            Int      @id @default(autoincrement())
-  walletAddress String   @unique
+  walletAddress String?  @unique
   nullifierHash String   @unique
   name          String?
   email         String
@@ -66,8 +66,9 @@ model Property {
   images        String[]
 
   // Pricing details
-  rentalPrice   Float
-  dateAvailable DateTime? @default(now())
+  rentalPrice    Float
+  dateAvailable  DateTime?       @default(now())
+  rentalPayments RentalPayment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -80,15 +81,12 @@ model RentalPayment {
   owner         PropertyOwner @relation(fields: [ownerAddress], references: [walletAddress])
   ownerAddress  String
 
-  amount      Float
-  paymentDate DateTime
-  createdAt   DateTime    @default(now())
-  paymentType PaymentType
-}
+  property   Property @relation(fields: [propertyId], references: [id])
+  propertyId Int
 
-enum PaymentType {
-  RENT
-  DEPOSIT
+  amount          Float
+  transactionHash String
+  createdAt       DateTime @default(now())
 }
 
 enum PropertyType {
