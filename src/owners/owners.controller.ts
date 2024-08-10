@@ -6,11 +6,11 @@ import {
   Patch,
   Param,
   Delete,
-} from '@nestjs/common';
-import { OwnersService } from './owners.service';
-import { Prisma } from '@prisma/client';
+} from "@nestjs/common";
+import { OwnersService } from "./owners.service";
+import { Prisma } from "@prisma/client";
 
-@Controller('owners')
+@Controller("owners")
 export class OwnersController {
   constructor(private readonly ownersService: OwnersService) {}
 
@@ -24,21 +24,26 @@ export class OwnersController {
     return this.ownersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get(":id")
+  findOne(@Param("id") id: string) {
     return this.ownersService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Get("nullifierHash/:nullifierHash")
+  findOneByNullifierHash(@Param("nullifierHash") nullifierHash: string) {
+    return this.ownersService.findOneByNullifierHash(nullifierHash);
+  }
+
+  @Patch(":id")
   update(
-    @Param('id') id: string,
-    @Body() updateOwnerDto: Prisma.PropertyOwnerUpdateInput,
+    @Param("id") id: string,
+    @Body() updateOwnerDto: Prisma.PropertyOwnerUpdateInput
   ) {
     return this.ownersService.update(+id, updateOwnerDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(":id")
+  remove(@Param("id") id: string) {
     return this.ownersService.remove(+id);
   }
 }

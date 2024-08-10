@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { DatabaseService } from 'src/database/database.service';
+import { Injectable } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
+import { DatabaseService } from "src/database/database.service";
 
 @Injectable()
 export class OwnersService {
@@ -17,6 +17,12 @@ export class OwnersService {
     return this.databaseService.propertyOwner.findUniqueOrThrow({
       where: { id },
     });
+  }
+  findOneByNullifierHash(nullifierHash: string) {
+    const isExist= this.databaseService.propertyOwner.findFirst({
+      where: { nullifierHash },
+    });
+    return !!isExist;
   }
 
   update(id: number, updateOwnerDto: Prisma.PropertyOwnerUpdateInput) {
