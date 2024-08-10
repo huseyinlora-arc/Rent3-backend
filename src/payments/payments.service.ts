@@ -9,10 +9,12 @@ export class PaymentsService {
   async create(createPaymentDto: Prisma.RentalPaymentCreateInput) {
     // Validate the payment transaction
     if (!this.validateTransaction(createPaymentDto.transactionHash)) {
-      throw new HttpException("Forbidden", HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        "Failed to validate transaction hash",
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
-    console.log("dto: ", createPaymentDto);
     // Create the payment
     const paymentData = this.databaseService.rentalPayment.create({
       data: createPaymentDto,
@@ -35,7 +37,6 @@ export class PaymentsService {
 
   async validateTransaction(transactionHash: string) {
     const url = `https://sepolia.explorer.mode.network/api/v2/transactions/${transactionHash}`;
-    console.log("Making request to: ", url);
     const data = await axios
       .get(
         `https://sepolia.explorer.mode.network/api/v2/transactions/${transactionHash}`,
@@ -47,7 +48,6 @@ export class PaymentsService {
       )
       .then((res) => res.data)
       .catch((error) => console.error(error));
-    console.log(data);
     try {
       return data.status && data.status === "ok";
     } catch (error) {
