@@ -1,15 +1,18 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { DatabaseService } from "src/database/database.service";
 import { Prisma } from "@prisma/client";
+import axios from "axios";
 
 @Injectable()
 export class PaymentsService {
   constructor(private readonly databaseService: DatabaseService) {}
-  create(createPaymentDto: Prisma.RentalPaymentCreateInput) {
+  async create(createPaymentDto: Prisma.RentalPaymentCreateInput) {
     // Validate the payment transaction
     if (!this.validateTransaction(createPaymentDto.transactionHash)) {
       throw new HttpException("Forbidden", HttpStatus.BAD_REQUEST);
     }
+
+    console.log("dto: ", createPaymentDto);
     // Create the payment
     const paymentData = this.databaseService.rentalPayment.create({
       data: createPaymentDto,
@@ -18,9 +21,9 @@ export class PaymentsService {
     // Assign the tenant to the property
     this.databaseService.property.update({
       data: {
-        tenantAddress: createPaymentDto.tenant.connect.walletAddress,
+        tenantAddress: (await paymentData.tenant()).walletAddress,
       },
-      where: { id: createPaymentDto.property.connect.id },
+      where: { id: (await paymentData.property()).id },
     });
 
     return paymentData;
@@ -31,19 +34,25 @@ export class PaymentsService {
   }
 
   async validateTransaction(transactionHash: string) {
-    const data: any = fetch(
-      `https://sepolia.explorer.mode.network/api/v2/transactions/${transactionHash}`,
-      {
-        headers: {
-          accept: "application/json",
+    const url = `https://sepolia.explorer.mode.network/api/v2/transactions/${transactionHash}`;
+    console.log("Making request to: ", url);
+    const data = await axios
+      .get(
+        `https://sepolia.explorer.mode.network/api/v2/transactions/${transactionHash}`,
+        {
+          headers: {
+            Accept: "application/json",
+          },
         },
-      },
-    )
-      .then((res) => res.json())
-      .catch((e) => {
-        console.log(e);
-      });
-    return data.status && data.status === "ok";
+      )
+      .then((res) => res.data)
+      .catch((error) => console.error(error));
+    console.log(data);
+    try {
+      return data.status && data.status === "ok";
+    } catch (error) {
+      return false;
+    }
   }
 
   findOne(id: number) {
