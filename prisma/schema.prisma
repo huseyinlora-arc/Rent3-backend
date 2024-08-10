@@ -52,10 +52,10 @@ model Property {
   neighborhood String
 
   // Property details
-  type         PaymentType
+  type         PropertyType
   bedrooms     Int
   bathrooms    Int
-  furnished    Boolean     @default(false)
+  furnished    Boolean      @default(false)
   floorSizeSqm Int
   description  String
 
