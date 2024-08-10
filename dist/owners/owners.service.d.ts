@@ -8,7 +8,7 @@ export declare class OwnersService {
         walletAddress: string;
         nullifierHash: string;
         name: string | null;
-        email: string | null;
+        email: string;
         createdAt: Date;
         updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
@@ -17,7 +17,7 @@ export declare class OwnersService {
         walletAddress: string;
         nullifierHash: string;
         name: string | null;
-        email: string | null;
+        email: string;
         createdAt: Date;
         updatedAt: Date;
     }[]>;
@@ -26,7 +26,7 @@ export declare class OwnersService {
         walletAddress: string;
         nullifierHash: string;
         name: string | null;
-        email: string | null;
+        email: string;
         createdAt: Date;
         updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
@@ -35,7 +35,7 @@ export declare class OwnersService {
         walletAddress: string;
         nullifierHash: string;
         name: string | null;
-        email: string | null;
+        email: string;
         createdAt: Date;
         updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
@@ -44,7 +44,7 @@ export declare class OwnersService {
         walletAddress: string;
         nullifierHash: string;
         name: string | null;
-        email: string | null;
+        email: string;
         createdAt: Date;
         updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
