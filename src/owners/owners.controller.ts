@@ -29,6 +29,11 @@ export class OwnersController {
     return this.ownersService.findOne(hash);
   }
 
+  @Get(":nullifierHash/properties")
+  findProperties(@Param("nullifierHash") hash: string) {
+    return this.ownersService.findProperties(hash);
+  }
+
   @Patch(":id")
   update(
     @Param("id") id: string,

@@ -23,6 +23,13 @@ export class OwnersService {
     }
   }
 
+  async findProperties(nullifierHash: string) {
+    const owner = await this.findOne(nullifierHash);
+    return this.databaseService.property.findMany({
+      where: { ownerAddress: owner.walletAddress },
+    });
+  }
+
   update(id: number, updateOwnerDto: Prisma.PropertyOwnerUpdateInput) {
     return this.databaseService.propertyOwner.update({
       data: updateOwnerDto,
