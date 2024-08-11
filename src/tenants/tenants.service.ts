@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { DatabaseService } from 'src/database/database.service';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
+import { DatabaseService } from "src/database/database.service";
 
 @Injectable()
 export class TenantsService {
@@ -13,8 +13,14 @@ export class TenantsService {
     return this.databaseService.tenant.findMany();
   }
 
-  findOne(id: number) {
-    return this.databaseService.tenant.findUniqueOrThrow({ where: { id } });
+  findOne(nullifierHash: string) {
+    try {
+      return this.databaseService.tenant.findUniqueOrThrow({
+        where: { nullifierHash },
+      });
+    } catch (error) {
+      throw new HttpException("User does not exist.", HttpStatus.NOT_FOUND);
+    }
   }
 
   update(id: number, updateTenantDto: Prisma.TenantUpdateInput) {

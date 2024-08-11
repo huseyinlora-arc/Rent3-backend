@@ -24,20 +24,15 @@ export class OwnersController {
     return this.ownersService.findAll();
   }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.ownersService.findOne(+id);
-  }
-
-  @Get("nullifierHash/:nullifierHash")
-  findOneByNullifierHash(@Param("nullifierHash") nullifierHash: string) {
-    return this.ownersService.findOneByNullifierHash(nullifierHash);
+  @Get(":nullifierHash")
+  findOne(@Param("nullifierHash") hash: string) {
+    return this.ownersService.findOne(hash);
   }
 
   @Patch(":id")
   update(
     @Param("id") id: string,
-    @Body() updateOwnerDto: Prisma.PropertyOwnerUpdateInput
+    @Body() updateOwnerDto: Prisma.PropertyOwnerUpdateInput,
   ) {
     return this.ownersService.update(+id, updateOwnerDto);
   }

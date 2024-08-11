@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { DatabaseService } from "src/database/database.service";
 
@@ -13,16 +13,14 @@ export class OwnersService {
     return this.databaseService.propertyOwner.findMany();
   }
 
-  findOne(id: number) {
-    return this.databaseService.propertyOwner.findUniqueOrThrow({
-      where: { id },
-    });
-  }
-  findOneByNullifierHash(nullifierHash: string) {
-    const isExist= this.databaseService.propertyOwner.findFirst({
-      where: { nullifierHash },
-    });
-    return !!isExist;
+  findOne(nullifierHash: string) {
+    try {
+      return this.databaseService.propertyOwner.findUniqueOrThrow({
+        where: { nullifierHash },
+      });
+    } catch (error) {
+      throw new HttpException("User does not exist.", HttpStatus.NOT_FOUND);
+    }
   }
 
   update(id: number, updateOwnerDto: Prisma.PropertyOwnerUpdateInput) {

@@ -1,13 +1,5 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Post, Body } from "@nestjs/common";
+import { AppService } from "./app.service";
 
 type apartType = {
   id: string;
@@ -24,7 +16,7 @@ type userCreateType = {
   nullifierHash: string;
   zkProof: string;
   verificationLevel: string;
-  rentedAparts: apartType
+  rentedAparts: apartType;
 };
 
 @Controller()
@@ -36,8 +28,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post('/user/create')
+  @Post("/user/create")
   async createUser(@Body() data: userCreateType) {
-    return 'User created';
+    return "User created";
   }
 }

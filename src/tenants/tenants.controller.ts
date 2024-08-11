@@ -6,11 +6,11 @@ import {
   Patch,
   Param,
   Delete,
-} from '@nestjs/common';
-import { TenantsService } from './tenants.service';
-import { Prisma } from '@prisma/client';
+} from "@nestjs/common";
+import { TenantsService } from "./tenants.service";
+import { Prisma } from "@prisma/client";
 
-@Controller('tenants')
+@Controller("tenants")
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
 
@@ -24,21 +24,21 @@ export class TenantsController {
     return this.tenantsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tenantsService.findOne(+id);
+  @Get(":nullifierHash")
+  findOne(@Param("nullifierHash") hash: string) {
+    return this.tenantsService.findOne(hash);
   }
 
-  @Patch(':id')
+  @Patch(":id")
   update(
-    @Param('id') id: string,
+    @Param("id") id: string,
     @Body() updateTenantDto: Prisma.TenantUpdateInput,
   ) {
     return this.tenantsService.update(+id, updateTenantDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(":id")
+  remove(@Param("id") id: string) {
     return this.tenantsService.remove(+id);
   }
 }
